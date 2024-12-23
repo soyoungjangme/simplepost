@@ -1,0 +1,5 @@
+package com.postweb.mapper;
+
+public interface postmapper {
+	public void registPost();
+}

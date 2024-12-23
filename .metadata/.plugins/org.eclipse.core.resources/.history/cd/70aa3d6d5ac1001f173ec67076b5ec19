@@ -1,0 +1,5 @@
+package com.postweb.dto;
+
+public class postDTO {
+
+}

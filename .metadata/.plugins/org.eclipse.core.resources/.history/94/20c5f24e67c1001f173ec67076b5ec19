@@ -1,0 +1,12 @@
+package com.postweb.service;
+
+public class PostServiceImpl implements PostService{
+
+	
+	
+	@Override
+	public void registPost() {
+		
+	}
+
+}

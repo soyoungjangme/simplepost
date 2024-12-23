@@ -1,0 +1,5 @@
+package com.postweb.domain;
+
+public class postVO {
+
+}

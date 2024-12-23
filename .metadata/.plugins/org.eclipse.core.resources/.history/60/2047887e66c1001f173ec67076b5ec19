@@ -1,0 +1,5 @@
+package com.postweb.service;
+
+public interface PostService {
+	public void registPost();
+}

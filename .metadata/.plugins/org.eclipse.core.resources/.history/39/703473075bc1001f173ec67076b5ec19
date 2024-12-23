@@ -1,0 +1,11 @@
+package com.postweb.dto;
+
+import java.sql.Date;
+
+public class postDTO {
+	private Long postNo; //게시물번호
+	private String postTitle; //게시물 제목
+	private String postContent; //게시물 내용
+	private Date postCreatedDate; //게시물 등록일
+	private Long postHit; //게시물 조회수
+}
