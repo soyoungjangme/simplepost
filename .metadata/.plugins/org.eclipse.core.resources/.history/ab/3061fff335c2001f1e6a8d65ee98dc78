@@ -1,7 +1,0 @@
-package com.postweb.mapper;
-
-import com.postweb.domain.PostDTO;
-
-public interface PostMapper {
-	public void registPost(PostDTO postDTO);
-}

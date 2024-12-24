@@ -1,9 +1,0 @@
-INDEX VERSION 1.134
-C:\Users\user\Desktop\jsy\eclipse\simplepost\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3346237522.index
-\simplepost\src\main\java
-C:\Users\user\Desktop\jsy\eclipse\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4164809657.index
-\simplepost\src\main\java
-C:\Users\user\Desktop\jsy\eclipse\simplepost\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4164809657.index
-\simplepost\src\main\java
-C:\Users\user\Desktop\jsy\eclipse\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1056475854.index
-\simplepost\src\main\java
