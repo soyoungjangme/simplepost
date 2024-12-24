@@ -22,3 +22,15 @@
 1734981976441	Rename type 'postServiceImpl'
 1734982145822	Rename resource 'jsp'
 1734984180277	Move 'index.jsp' to 'webapp'
+1735046717675	Rename type 'PostVO'
+1735047115322	Rename type 'Postmapper'
+1735062747221	Rename resource 'postmapper.xml'
+1735063307938	Delete element
+1735063350577	Move compilation unit
+1735063398791	Delete element
+1735063562101	Rename resource 'resource'
+1735064371169	Rename resource 'mybatis'
+1735064409773	Move file
+1735064456684	Move file
+1735064473040	Delete element
+1735065298938	Move 'mapper' to 'mybatis'

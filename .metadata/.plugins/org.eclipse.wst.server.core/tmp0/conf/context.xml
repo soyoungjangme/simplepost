@@ -32,13 +32,13 @@
     <Resource 
     	auth = "Container"
     	driverClassName = "com.mysql.cj.jdbc.Driver"
-    	url = "jdbc:mysql://localhost:3306/simplepost?useSSL=false&amp;serverTimezone=UTC"
+    	url = "jdbc:mysql://127.0.0.1:3306/simplepost?useSSL=false&amp;serverTimezone=UTC"
     	username = "jsy"
     	password = "jsy1120"
     	name = "jdbc/mysql"
     	type = "javax.sql.DataSource"
-    	maxActive = "300"
-    	maxWait = "1000"
+    	maxTotal = "300"
+    	maxWaitMillis = "1000"
     />
     
     
