@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
- --%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,18 +28,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>제목입니다.</td>
-                            <td>2024-05-12</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>제목입니다.</td>
-                            <td>2024-11-12</td>
-                            <td>5</td>
-                        </tr>
+	                    <c:forEach var="post" items="${postList}" varStatus="status">
+	                        <tr>
+	                            <td>${status.index+1}</td>
+	                            <td>${post.postTitle}</td>
+	                            <td>${post.postRegDate}</td>
+	                            <td>${post.postHit}</td>
+	                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

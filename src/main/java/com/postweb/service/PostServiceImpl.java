@@ -55,7 +55,7 @@ public class PostServiceImpl implements PostService{
 		try (SqlSession sql = sqlSessionFactory.openSession()){
 			PostMapper mapper = sql.getMapper(PostMapper.class);
 			List<PostDTO> allPosts = mapper.getAllPosts();
-			System.out.println("가져온 게시글 목록: " + allPosts.toString());
+			System.out.println("게시글 목록: " + allPosts.toString());
 			
 			sql.commit();
 			return allPosts;

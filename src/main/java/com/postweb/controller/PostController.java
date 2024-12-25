@@ -1,8 +1,10 @@
 package com.postweb.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.postweb.constants.UrlPaths;
+import com.postweb.domain.PostDTO;
 import com.postweb.service.PostService;
 import com.postweb.service.PostServiceImpl;
 
@@ -40,8 +42,17 @@ public class PostController extends HttpServlet {
 		
 		switch(command) {
 			case UrlPaths.POST_LIST:
-	            req.getRequestDispatcher("postList.jsp").forward(req, resp);
-				postService.getAllPosts(req, resp);
+				// 서비스 계층에서 데이터 가져오기
+	            List<PostDTO> postList = postService.getAllPosts(req, resp);
+	            
+	            if (postList != null) {
+	                // JSP에 데이터 전달
+	                req.setAttribute("postList", postList);
+	                req.getRequestDispatcher("postList.jsp").forward(req, resp);
+	            } else {
+	                // 오류 페이지로 리다이렉트
+	                resp.sendRedirect(req.getContextPath() + "/errorPage.jsp");
+	            }
 	            break;
 			case UrlPaths.POST_REGIST:
 	            req.getRequestDispatcher("postRegist.jsp").forward(req, resp);
