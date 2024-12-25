@@ -1,19 +1,20 @@
 package com.postweb.domain;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class PostDTO {
 	private Long postNo; //게시물번호
 	private String postTitle; //게시물 제목
 	private String postContent; //게시물 내용
-	private Date postRegDate; //게시물 등록일
+	private LocalDateTime postRegDate; //게시물 등록일
 	private Long postHit; //게시물 조회수
 	
 	//기본생성자
 	public PostDTO() {}
 	
 	//생성자
-	public PostDTO(Long postNo, String postTitle, String postContent, Date postRegDate, Long postHit) {
+	public PostDTO(Long postNo, String postTitle, String postContent, LocalDateTime postRegDate, Long postHit) {
 		super();
 		this.postNo = postNo;
 		this.postTitle = postTitle;
@@ -47,12 +48,12 @@ public class PostDTO {
 		this.postContent = postContent;
 	}
 	
-	public Date getPostRegDate() {
+	public LocalDateTime getPostRegDate() {
 		return postRegDate;
 	}
 	
 	
-	public void setPostRegDate(Date postRegDate) {
+	public void setPostRegDate(LocalDateTime postRegDate) {
 		this.postRegDate = postRegDate;
 	}
 	

@@ -4,11 +4,17 @@
 
 <mapper namespace="com.postweb.mapper.PostMapper">
 	<insert id="registPost" parameterType="com.postweb.domain.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
-		insert into posts(post_title, post_content, post_reg_date, post_hit) 
-		value (#{postTitle}, #{postContent}, now(), 0)
+		insert into posts(post_title, post_content, post_hit) 
+		value (#{postTitle}, #{postContent}, 0)
 	</insert>
 	
 	<select id="getAllPosts" resultType="com.postweb.domain.PostDTO">
 		select * from posts
+		order by post_reg_date DESC
+	</select>
+	
+	<select id="getPostDetail" parameterType="long" resultType="com.postweb.domain.PostDTO">
+		select * from posts
+		where post_no = #{postNo}
 	</select>
 </mapper>

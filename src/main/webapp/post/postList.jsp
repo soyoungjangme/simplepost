@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>  
-
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,8 +31,8 @@
 	                    <c:forEach var="post" items="${postList}" varStatus="status">
 	                        <tr>
 	                            <td>${status.index+1}</td>
-	                            <td>${post.postTitle}</td>
-	                            <td>${post.postRegDate}</td>
+	                            <td><a href="./postDetail.post?postNo=${post.postNo}">${post.postTitle}</a></td>
+	                            <td>${formattedDates[status.index]}</td>
 	                            <td>${post.postHit}</td>
 	                        </tr>
                         </c:forEach>

@@ -18,7 +18,7 @@ public class PostServiceImpl implements PostService{
 	
     private final SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory(); // 주의: 메소드명 변경
 
-
+    //게시글 등록하기
 	@Override
 	public void registPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService{
 		}
 	}
 
-
+	//게시글 목록보기
 	@Override
 	public List<PostDTO> getAllPosts(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService{
 			List<PostDTO> allPosts = mapper.getAllPosts();
 			System.out.println("게시글 목록: " + allPosts.toString());
 			
-			sql.commit();
+			sql.close();
 			return allPosts;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,6 +65,32 @@ public class PostServiceImpl implements PostService{
 			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
 			
 	        return null;  
+		}
+	}
+
+
+	//게시글 상세보기
+	@Override
+	public PostDTO getPostDetail(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String postNoParam = request.getParameter("postNo");
+
+		try (SqlSession sql = sqlSessionFactory.openSession()){
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+
+			Long postNo = Long.parseLong(postNoParam);
+			PostDTO post = mapper.getPostDetail(postNo);
+			System.out.println("상세내용: " + post.toString());
+			
+			sql.close();
+			return post;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("상세 게시글 불러오는 중 error");
+			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+			
+			return null;
 		}
 	}
 
