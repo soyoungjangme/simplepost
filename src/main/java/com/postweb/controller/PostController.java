@@ -21,20 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class PostController extends HttpServlet {
 	
 	private final PostService postService = new PostServiceImpl();
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
 	
-	protected void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		req.setCharacterEncoding("UTF-8"); //클라이언트에서 보낸 요청 인코딩 방식을 UTF-8로 하겠다.
+	public String parseCommand(HttpServletRequest req) {
 		
 		String uri = req.getRequestURI(); //요청된 URI
 		String path = req.getContextPath(); //프로젝트 식별이름 ex) simplepost
@@ -42,58 +30,36 @@ public class PostController extends HttpServlet {
 		
 		System.out.println("경로(command): " + command);
 		
+		return command;
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String command = parseCommand(req);
 		
 		switch(command) {
 			case UrlPaths.POST_LIST:
-				// 서비스 계층에서 데이터 가져오기
-	            List<PostDTO> postList = postService.getAllPosts(req, resp);
-	            
-	            if (postList != null) {
-	            	 // postRegDate를 포맷팅해서 담은 객체 생성
-	                List<String> formattedDates = new ArrayList<>();
-	                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	                for (PostDTO post : postList) {
-	                    LocalDateTime postRegDate = post.getPostRegDate();
-	                    if (postRegDate != null) {
-	                        String formattedDate = postRegDate.format(formatter);
-	                        formattedDates.add(formattedDate);
-	                    } else {
-	                        formattedDates.add(null);  // 날짜가 없으면 null 처리
-	                    }
-	                }
-
-	                // 포맷된 날짜 리스트를 request에 저장
-	                req.setAttribute("formattedDates", formattedDates);
-	                req.setAttribute("postList", postList); // 원본 postList도 전달
-
-	                req.getRequestDispatcher("postList.jsp").forward(req, resp);
-	            } else {
-	                // 오류 페이지로 리다이렉트
-	                resp.sendRedirect("errorPage.jsp");
-	            }
+				getPostList(req, resp);
 	            break;
 	            
 			case UrlPaths.POST_DETAIL:
-				PostDTO postDetail = postService.getPostDetail(req, resp);
-				
-				if(postDetail != null) {
-					LocalDateTime postRegDate = postDetail.getPostRegDate();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                    String formattedDate = postRegDate.format(formatter);
-                    req.setAttribute("formattedDate", formattedDate);  // Add formatted date to request
-
-					req.setAttribute("postDetail", postDetail);
-					req.getRequestDispatcher("postDetail.jsp").forward(req, resp);
-				} else {
-					resp.sendRedirect("errorPage.jsp");
-				}
+				getPostDetail(req, resp);
 				break;
 				
 			case UrlPaths.POST_REGIST:
 	            req.getRequestDispatcher("postRegist.jsp").forward(req, resp);
 	            break;
 	            
+            default:
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String command = parseCommand(req);
+		
+		switch(command) {
 			case UrlPaths.POST_REGIST_FORM:
 	            postService.registPost(req, resp);
 	            break;
@@ -101,7 +67,64 @@ public class PostController extends HttpServlet {
             default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
 		}
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		if("post_delete".equals(req.getParameter("post_delete"))) {
+			postService.deletePost(req, resp);	
+		} else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+		}
+	}
+	
+	// 게시글 목록 가져오기
+	public void getPostList( HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 서비스 계층에서 데이터 가져오기
+        List<PostDTO> postList = postService.getAllPosts(req, resp);
+        
+        if (postList != null) {
+        	 // postRegDate를 포맷팅해서 담은 객체 생성
+            List<String> formattedDates = new ArrayList<>();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            for (PostDTO post : postList) {
+                LocalDateTime postRegDate = post.getPostRegDate();
+                if (postRegDate != null) {
+                    String formattedDate = postRegDate.format(formatter);
+                    formattedDates.add(formattedDate);
+                } else {
+                    formattedDates.add(null);  // 날짜가 없으면 null 처리
+                }
+            }
+
+            // 포맷된 날짜 리스트를 request에 저장
+            req.setAttribute("formattedDates", formattedDates);
+            req.setAttribute("postList", postList); // 원본 postList도 전달
+
+            req.getRequestDispatcher("postList.jsp").forward(req, resp);
+        } else {
+            // 오류 페이지로 리다이렉트
+            resp.sendRedirect("errorPage.jsp");
+        }
+	}
+	
+	//게시글 상세 보기
+	public void getPostDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PostDTO postDetail = postService.getPostDetail(req, resp);
+		
+		if(postDetail != null) {
+			LocalDateTime postRegDate = postDetail.getPostRegDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = postRegDate.format(formatter);
+            req.setAttribute("formattedDate", formattedDate);  // Add formatted date to request
+
+			req.setAttribute("postDetail", postDetail);
+			req.getRequestDispatcher("postDetail.jsp").forward(req, resp);
+		} else {
+			resp.sendRedirect("errorPage.jsp");
+		}
 	}
 	
 	

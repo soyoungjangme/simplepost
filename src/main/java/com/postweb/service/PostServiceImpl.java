@@ -57,7 +57,6 @@ public class PostServiceImpl implements PostService{
 			List<PostDTO> allPosts = mapper.getAllPosts();
 			System.out.println("게시글 목록: " + allPosts.toString());
 			
-			sql.close();
 			return allPosts;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,11 +82,33 @@ public class PostServiceImpl implements PostService{
 			PostDTO post = mapper.getPostDetail(postNo);
 			System.out.println("상세내용: " + post.toString());
 			
-			sql.close();
 			return post;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("상세 게시글 불러오는 중 error");
+			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+			
+			return null;
+		}
+	}
+
+	@Override
+	public Boolean deletePost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String postNoParam = request.getParameter("delete");
+		
+		try (SqlSession sql = sqlSessionFactory.openSession()){
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+			
+			Long postNo = Long.parseLong(postNoParam);
+			Boolean deleteBool = mapper.deletePost(postNo);
+			System.out.println("삭제 성공 유무: " + deleteBool);
+			
+			return deleteBool;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("게시물 삭제 중 error");
 			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
 			
 			return null;

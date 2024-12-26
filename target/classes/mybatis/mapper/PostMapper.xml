@@ -17,4 +17,9 @@
 		select * from posts
 		where post_no = #{postNo}
 	</select>
+	
+	<delete id="deletePost" parameterType="long">
+		delete from posts
+		where post_no = #{postNo}
+	</delete>
 </mapper>

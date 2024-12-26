@@ -28,7 +28,7 @@
 	                            <input type="text" name="post_title" value="${postDetail.postTitle}" disabled/>
 	                        </div>
 	                        <div class="btn-box">
-	                            <button type="button" class="post-delete-btn">삭제</button>
+	                            <button type="button" class="post-delete-btn" name="post_delete" id="post_delete" value="${postDetail.postNo}">삭제</button>
 	                            <button type="button" class="post-modify-btn">수정</button>
 	                        </div>
 	                    </div>
@@ -42,5 +42,6 @@
 	            </div>
 	        </div>
     </div>
+    <script src="../js/postDetail.js"></script>
 </body>
 </html>
