@@ -1,6 +1,7 @@
 package com.postweb.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -71,13 +72,33 @@ public class PostController extends HttpServlet {
 	
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		if("post_delete".equals(req.getParameter("post_delete"))) {
-			postService.deletePost(req, resp);	
-		} else {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
-		}
+	    String command = parseCommand(req);
+	    resp.setContentType("application/json");
+	    resp.setCharacterEncoding("UTF-8");
+
+	    try (PrintWriter out = resp.getWriter()) {
+	        switch (command) {
+	            case UrlPaths.POST_DELETE:
+	                int result = postService.deletePost(req, resp);
+	                if (result > 0) {
+	                    out.write("{\"success\": true, \"message\": \"삭제 성공\"}");
+	                } else {
+	                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	                    out.write("{\"success\": false, \"message\": \"삭제 실패\"}");
+	                }
+	                break;
+	            default:
+	                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "{\"success\": false, \"message\": \"Page not found\"}");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	        try (PrintWriter out = resp.getWriter()) {
+	            out.write("{\"success\": false, \"message\": \"서버 내부 오류 발생\"}");
+	        }
+	    }
 	}
+
 	
 	// 게시글 목록 가져오기
 	public void getPostList( HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

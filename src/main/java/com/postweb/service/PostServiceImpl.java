@@ -93,25 +93,25 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public Boolean deletePost(HttpServletRequest request, HttpServletResponse response)
+	public int deletePost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String postNoParam = request.getParameter("delete");
+		String postNoParam = request.getParameter("postNo");
 		
 		try (SqlSession sql = sqlSessionFactory.openSession()){
 			PostMapper mapper = sql.getMapper(PostMapper.class);
 			
 			Long postNo = Long.parseLong(postNoParam);
-			Boolean deleteBool = mapper.deletePost(postNo);
-			System.out.println("삭제 성공 유무: " + deleteBool);
+			int result = mapper.deletePost(postNo);
+			sql.commit();
+			return result;
 			
-			return deleteBool;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("게시물 삭제 중 error");
 			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
 			
-			return null;
+			return 0;
 		}
 	}
 

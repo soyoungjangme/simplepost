@@ -8,5 +8,5 @@ public interface PostMapper {
 	public void registPost(PostDTO postDTO);
 	public List<PostDTO> getAllPosts();
 	public PostDTO getPostDetail(Long postNo);
-	public Boolean deletePost(Long postNo);
+	public int deletePost(Long postNo);
 }

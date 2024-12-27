@@ -13,6 +13,6 @@ public interface PostService {
 	public void registPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public List<PostDTO> getAllPosts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public PostDTO getPostDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
-	public Boolean deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	public int deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
 }
