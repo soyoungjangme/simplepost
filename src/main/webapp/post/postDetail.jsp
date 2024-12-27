@@ -29,7 +29,7 @@
 	                        </div>
 	                        <div class="btn-box">
 	                            <button type="button" class="post-delete-btn" onclick="postDelete(${postDetail.postNo})">삭제</button>
-	                            <button type="button" class="post-modify-btn">수정</button>
+	                            <button type="button" class="post-modify-btn" onclick="location.href='./postRegist.post?postNo=${postDetail.postNo}'">수정</button>
 	                        </div>
 	                    </div>
 	                    <div class="post-content-info">

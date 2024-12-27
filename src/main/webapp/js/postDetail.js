@@ -1,4 +1,4 @@
-
+//게시물 삭제
 function postDelete(postNo) {
 	if(confirm("삭제하시겠습니까?")) {
 		fetch(`postDelete.post?postNo=${postNo}`,{
@@ -17,3 +17,9 @@ function postDelete(postNo) {
 	}
 	
 }
+
+
+
+
+
+

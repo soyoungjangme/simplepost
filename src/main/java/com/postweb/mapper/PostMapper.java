@@ -9,4 +9,5 @@ public interface PostMapper {
 	public List<PostDTO> getAllPosts();
 	public PostDTO getPostDetail(Long postNo);
 	public int deletePost(Long postNo);
+	public void updatePost(PostDTO postDTO);
 }

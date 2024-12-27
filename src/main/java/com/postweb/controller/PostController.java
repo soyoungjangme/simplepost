@@ -98,8 +98,21 @@ public class PostController extends HttpServlet {
 	        }
 	    }
 	}
-
 	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String command = parseCommand(req);
+		
+		switch(command) {
+			case UrlPaths.POST_UPDATE:
+				postService.updatePost(req, resp);
+				break;
+			
+			default:
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+		}
+	}
+
 	// 게시글 목록 가져오기
 	public void getPostList( HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 서비스 계층에서 데이터 가져오기
@@ -133,20 +146,38 @@ public class PostController extends HttpServlet {
 	
 	//게시글 상세 보기
 	public void getPostDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PostDTO postDetail = postService.getPostDetail(req, resp);
-		
-		if(postDetail != null) {
-			LocalDateTime postRegDate = postDetail.getPostRegDate();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = postRegDate.format(formatter);
-            req.setAttribute("formattedDate", formattedDate);  // Add formatted date to request
+	    try {
+	        PostDTO postDetail = postService.getPostDetail(req, resp);
 
-			req.setAttribute("postDetail", postDetail);
-			req.getRequestDispatcher("postDetail.jsp").forward(req, resp);
-		} else {
-			resp.sendRedirect("errorPage.jsp");
-		}
+	        if (postDetail == null) {
+	            if (!resp.isCommitted()) {
+	                resp.sendRedirect("errorPage.jsp");
+	            }
+	            return;
+	        }
+
+	        // JSON 응답이 이미 처리된 경우 메서드 종료
+	        if (req.getHeader("Accept") != null && req.getHeader("Accept").contains("application/json")) {
+	            return;
+	        }
+
+	        // HTML 응답 처리
+	        LocalDateTime postRegDate = postDetail.getPostRegDate();
+	        if (postRegDate != null) {
+	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	            String formattedDate = postRegDate.format(formatter);
+	            req.setAttribute("formattedDate", formattedDate);
+	        }
+
+	        req.getRequestDispatcher("postDetail.jsp").forward(req, resp);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        if (!resp.isCommitted()) {
+	            resp.sendRedirect("errorPage.jsp");
+	        }
+	    }
 	}
+
 	
 	
 }

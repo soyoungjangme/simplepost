@@ -24,10 +24,11 @@
                 </div>
                 <div class="btn-box">
                     <a href="./postList.post">목록</a>
-                    <button type="submit">등록</button>
+                    <button type="submit" class="form">완료</button>
                 </div>
             </div>
         </form>
     </div>
+    <script src="../js/postRegist.js"></script>
 </body>
 </html>
