@@ -19,7 +19,7 @@ import util.mybatis.MybatisUtil;
 
 public class PostServiceImpl implements PostService{
 	
-    private final SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory(); // 주의: 메소드명 변경
+    private final SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory();
 
     //게시글 등록하기
 	@Override

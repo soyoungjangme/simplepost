@@ -1,0 +1,102 @@
+body {margin: auto;}
+
+p {margin: 0;}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 640px;
+}
+
+.signup-box {
+    padding: 10px;
+    width: 35%;
+}
+
+.user-signup-title {
+    background-color: #333;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.login-info-regist {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.info-group {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.info-group > p {
+    font-weight: 600;
+    font-size: small;
+    width: 20%;
+}
+
+input {
+    padding: 5px;
+    font-size: small;
+}
+
+.small-text {
+    font-size: x-small;
+    color: rgb(207, 2, 2);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-id-group {
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-template-rows: auto auto;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.info-id-group > p {
+    font-weight: 600;
+    font-size: small;
+}
+
+.signup-box .btn-box {
+    overflow: hidden;
+}
+
+.go-login {
+    float: left;
+    background-color: white;
+    border: none;
+    padding: 3px 10px;
+    cursor: pointer;
+}
+
+.go-regist {
+    float: right;
+    background-color: white;
+    border: none;
+    padding: 3px 10px;
+    cursor: pointer;
+}
+
+.go-login:hover,
+.go-regist:hover {
+    background-color: #eee;
+    font-weight: 600;
+}

@@ -30,6 +30,7 @@
 	  <!-- 매퍼는 mybatis/mapper폴더 아래에 모으고, 매퍼의 위치를 지정한다. -->
 	  <mappers>
 	    <mapper resource="mybatis/mapper/PostMapper.xml"/>
+	    <mapper resource="mybatis/mapper/UserMapper.xml"/>
 	  </mappers>
 
 
