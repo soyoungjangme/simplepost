@@ -11,17 +11,19 @@
 </head>
 <body>
     <div class="login-container">
-        <div class="login-box">
-            <p>로그인</p>
-            <div class="login-info">
-                <input type="text" placeholder="아이디"/>
-                <input type="text" placeholder="비밀번호"/>
-            </div>
-            <div class="btn-box">
-                <button type="button">login</button>
-            </div>
-            <a href="./userSignUp.jsp">회원가입</a>
-        </div>
+        <form action="userLoginForm.user" method="post">
+        	<div class="login-box">
+	            <p>로그인</p>
+	            <div class="login-info">
+	                <input type="text" name="user_id" placeholder="아이디"/>
+	                <input type="text" name="user_pw" placeholder="비밀번호"/>
+	            </div>
+	            <div class="btn-box">
+	                <button type="submit">login</button>
+	            </div>
+	            <a href="./userSignUp.user">회원가입</a>
+        	</div>
+        </form>
     </div>
 </body>
 </html>

@@ -27,15 +27,38 @@ public class UserController extends HttpServlet {
 		
 		return command;
 	}
+	
+	
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String command = parseCommand(req);
+		
+		switch(command) {
+			case UrlPaths.USER_SIGNUP:
+	            req.getRequestDispatcher("userSignUp.jsp").forward(req, resp);
+	            break;
+			case UrlPaths.USER_LOGIN:
+	            req.getRequestDispatcher("userLogin.jsp").forward(req, resp);
+	            break;
+            default:
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+		}
+	}
+
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String command = parseCommand(req);
 		
-		switch(command) {
+		switch(command) {			
 			case UrlPaths.USER_SIGNUP_FORM:
 				userService.userSignUp(req, resp);
+				break;
+			case UrlPaths.USER_LOGIN_FORM:
+				userService.checkLogin(req, resp);
 				break;
 			default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
