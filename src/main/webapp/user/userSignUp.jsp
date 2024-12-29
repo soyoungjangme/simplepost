@@ -30,12 +30,12 @@
                     <div class="info-id-group">
                         <p>아이디</p>
                         <div class="input-group">
-                            <input type="text" name="user_id" placeholder="아이디를 입력해주세요."/>
-                            <button type="button">중복확인</button>
+                            <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력해주세요."/>
+                            <button type="button" onclick="checkId()">중복확인</button>
                         </div>
                         <div></div>
                         <div class="small-text">
-                            <p>중복된 아이디입니다.</p>
+                            <p id="idCheckMessage"></p>
                         </div>   
                     </div>
                     
@@ -51,5 +51,6 @@
             </form>
         </div>
     </div>
+    <script src="../js/userSignUp.js"></script>
 </body>
 </html>

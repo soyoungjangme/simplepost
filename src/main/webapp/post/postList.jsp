@@ -27,7 +27,7 @@
                             <th>no.</th>
                             <th>제목</th>
                             <th>등록일</th>
-                            <th>조회수</th>
+                            <th>작성자</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +36,7 @@
                                 <td>${status.index + 1}</td>
                                 <td><a href="./postDetail.post?postNo=${post.postNo}">${post.postTitle}</a></td>
                                 <td>${formattedDates[status.index]}</td>
-                                <td>${post.postHit}</td>
+                                <td>${post.userDTO.userNick}</td>
                             </tr>
                         </c:forEach>
                     </tbody>

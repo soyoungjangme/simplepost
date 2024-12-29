@@ -100,6 +100,25 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
+
+	@Override
+	public int duplicatedId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+		System.out.println("userId확인 " + userId);
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			UserMapper mapper = sql.getMapper(UserMapper.class);
+			int checkCnt = mapper.duplicatedId(userId);
+			System.out.println("id확인: " + checkCnt);
+			
+			return checkCnt;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ID중복확인 중 서버 error");
+			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+			return -1;
+		}
+	}
 	
 	
 

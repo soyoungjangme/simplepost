@@ -60,6 +60,11 @@ public class UserController extends HttpServlet {
 			case UrlPaths.USER_LOGIN_FORM:
 				userService.checkLogin(req, resp);
 				break;
+			case "/user/duplicatedIdCheckForm.user":
+				int checkCnt = userService.duplicatedId(req, resp);
+	            resp.setContentType("text/plain"); // 간단한 정수값 반환
+	            resp.getWriter().write(String.valueOf(checkCnt)); // 정수값 반환
+	            break;
 			default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
 		}

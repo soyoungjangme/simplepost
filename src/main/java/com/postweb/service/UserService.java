@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface UserService {
 	public void userSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	public int duplicatedId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public void checkLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public UserDTO getUserInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

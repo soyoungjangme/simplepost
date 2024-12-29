@@ -8,6 +8,11 @@
 		value (#{userId}, #{userPw}, #{userName}, #{userNick})
 	</insert>
 	
+	<select id="duplicatedId" parameterType="string" resultType="int">
+		select count(*) from users
+		where user_id = #{userId}
+	</select>
+	
 	<select id="checkLogin" resultType="long" parameterType="com.postweb.domain.UserDTO">
 		select user_no from users
 		where user_id = #{userId} and user_pw = #{userPw}
