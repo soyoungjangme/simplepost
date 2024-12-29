@@ -1,0 +1,43 @@
+body {margin: 0;}
+
+p {margin: 0;}
+
+.header-container {
+    padding: 0 50px;
+}
+
+.top-title {
+    font-size: xx-large;
+    font-weight: 600;
+    padding: 30px;
+    text-align: center;
+}
+
+.post-top {
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    overflow: hidden;
+    font-size: small;
+}
+
+.user-status {
+    float: left;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.user-status > a {
+    text-decoration: none;
+    color: #666;
+    font-size: x-small;
+}
+
+.logout {
+    float: right;
+}
+
+.logout > a {
+    text-decoration: none;
+    color: rgb(255, 136, 0);
+}

@@ -40,13 +40,13 @@ public class SessionCheckFilter implements Filter {
         } else {
             // 일반 요청에서 세션 확인
             HttpSession session = httpRequest.getSession();
-            String userId = (String) session.getAttribute("userId");
+            Long userNo = (Long)session.getAttribute("userNo");
 
-            if (userId == null && !path.equals("/user/userLogin.user") && !path.equals("/user/userSignUp.user")) {
+            if (userNo == null && !path.equals("/user/userLogin.user") && !path.equals("/user/userSignUp.user") && !path.equals("/post/postList.post")) {
                 System.out.println("로그인 정보 없음");
             }
 
-            System.out.println("현재 로그인된 유저 ID: " + userId);
+            System.out.println("현재 로그인된 유저 No: " + userNo);
         }
 
         // 다음 필터 또는 서블릿으로 요청 전달

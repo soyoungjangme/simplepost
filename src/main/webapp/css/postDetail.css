@@ -11,14 +11,16 @@ p {
 .post-detail-box {
     /* border: 1px solid black; */
     border-radius: 5px;
-    width: 1000px;
-    padding: 20px;
+    /* width: 1000px; */
+    padding: 10px 50px;
+    width: 100%;
 }
 
 .post-reg-info {
     overflow: hidden;
     margin-bottom: 50px;
     color: #999;
+    padding: 0 15px;
 }
 
 .writer-name {
@@ -37,7 +39,7 @@ p {
 }
 
 .post-info {
-    width: 700px;
+    width: 60%;
 }
 
 .post-title-btn {

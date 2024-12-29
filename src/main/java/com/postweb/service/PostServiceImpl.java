@@ -15,6 +15,7 @@ import com.postweb.mapper.PostMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import util.mybatis.MybatisUtil;
 
 public class PostServiceImpl implements PostService{
@@ -30,8 +31,14 @@ public class PostServiceImpl implements PostService{
 		ObjectMapper objectMapper = new ObjectMapper();
 		PostDTO postDTO = objectMapper.readValue(request.getInputStream(), PostDTO.class);
 		
+		HttpSession session = request.getSession();
+		Long userNo = (Long)session.getAttribute("userNo");
+		
+		postDTO.setPostWriterNo(userNo);
+		
 		System.out.println("글제목: " + postDTO.getPostTitle());
 	    System.out.println("내용: " + postDTO.getPostContent());
+	    System.out.println("유저번호: " + postDTO.getPostWriterNo());
 		
 		try (SqlSession sql = sqlSessionFactory.openSession()){ 
 			PostMapper mapper = sql.getMapper(PostMapper.class);
@@ -119,15 +126,16 @@ public class PostServiceImpl implements PostService{
 	public int deletePost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		Long userNo = (Long)request.getSession().getAttribute("userNo");
 		String postNoParam = request.getParameter("postNo");
+		Long postNo = Long.parseLong(postNoParam);
 		
 		try (SqlSession sql = sqlSessionFactory.openSession()){
 			PostMapper mapper = sql.getMapper(PostMapper.class);
 			
-			Long postNo = Long.parseLong(postNoParam);
-			int result = mapper.deletePost(postNo);
+			int result = mapper.deletePost(postNo,userNo);
 			sql.commit();
-			return result;
+			return result;	
 			
 		} catch (Exception e) {
 			e.printStackTrace();

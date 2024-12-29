@@ -1,8 +1,9 @@
-create table post (
+create table posts (
 	post_no bigint auto_increment primary key, -- 자동갱신구문
+    post_writer_no bigint,
 	post_title varchar(255),
     post_content text,
-    post_created_date date,
+    post_reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     post_hit bigint
 );
 

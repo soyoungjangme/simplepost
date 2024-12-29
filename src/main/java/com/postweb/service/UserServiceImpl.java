@@ -37,12 +37,8 @@ public class UserServiceImpl implements UserService {
 		try(SqlSession sql = sqlSessionFactory.openSession()){
 			UserMapper mapper = sql.getMapper(UserMapper.class);
 			mapper.userSignUp(dto);
-			System.out.println("유저가입정보: "+dto.toString());
+			//System.out.println("유저가입정보: "+dto.toString());
 			sql.commit();
-			
-			//session에 userId저장
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", userId);
 			
 			//로그인하러가기
 			response.sendRedirect(request.getContextPath() + "/user/userLogin.user");
@@ -67,12 +63,12 @@ public class UserServiceImpl implements UserService {
 		
 		try(SqlSession sql = sqlSessionFactory.openSession()){
 			UserMapper mapper = sql.getMapper(UserMapper.class);
-			int checkLogin = mapper.checkLogin(dto);
+			Long userNo = mapper.checkLogin(dto);
 			
-			if(checkLogin > 0) {
-				//session에 userId저장
+			if(userNo != null && userNo != 0) {
+				//session에 userNo저장
 				HttpSession session = request.getSession();
-				session.setAttribute("userId", userId);
+				session.setAttribute("userNo", userNo);
 				
 				response.sendRedirect(request.getContextPath() + "/post/postList.post");
 			} else {
@@ -86,5 +82,25 @@ public class UserServiceImpl implements UserService {
 			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
 		}
 	}
+
+	@Override
+	public UserDTO getUserInfo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Long userNo = (Long)request.getSession().getAttribute("userNo");
+		
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			UserMapper mapper = sql.getMapper(UserMapper.class);
+			UserDTO user = mapper.getUserInfo(userNo);
+			System.out.println("유저정보: " + user.toString());
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("로그인 정보 불러오는 중 서버 error");
+			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+			return null;
+		}
+	}
+	
+	
 
 }

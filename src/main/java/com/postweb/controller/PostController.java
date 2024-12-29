@@ -9,8 +9,11 @@ import java.util.List;
 
 import com.postweb.constants.UrlPaths;
 import com.postweb.domain.PostDTO;
+import com.postweb.domain.UserDTO;
 import com.postweb.service.PostService;
 import com.postweb.service.PostServiceImpl;
+import com.postweb.service.UserService;
+import com.postweb.service.UserServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class PostController extends HttpServlet {
 	
 	private final PostService postService = new PostServiceImpl();
+	private final UserService userService = new UserServiceImpl();
 	
 	public String parseCommand(HttpServletRequest req) {
 		
@@ -37,6 +41,8 @@ public class PostController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String command = parseCommand(req);
+		
+		getUserInfo(req, resp);
 		
 		switch(command) {
 			case UrlPaths.POST_LIST:
@@ -140,18 +146,19 @@ public class PostController extends HttpServlet {
             req.getRequestDispatcher("postList.jsp").forward(req, resp);
         } else {
             // 오류 페이지로 리다이렉트
-            resp.sendRedirect("errorPage.jsp");
+            resp.sendRedirect(req.getContextPath() + "/errorPage.jsp");
         }
 	}
 	
 	//게시글 상세 보기
 	public void getPostDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    try {
+		
+		try {
 	        PostDTO postDetail = postService.getPostDetail(req, resp);
 
 	        if (postDetail == null) {
 	            if (!resp.isCommitted()) {
-	                resp.sendRedirect("errorPage.jsp");
+	                resp.sendRedirect(req.getContextPath() + "/errorPage.jsp");
 	            }
 	            return;
 	        }
@@ -173,9 +180,22 @@ public class PostController extends HttpServlet {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        if (!resp.isCommitted()) {
-	            resp.sendRedirect("errorPage.jsp");
+                resp.sendRedirect(req.getContextPath()  + "/errorPage.jsp");
 	        }
 	    }
+	}
+	
+	public void getUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// session가져오기
+		Long userNo = (Long) req.getSession().getAttribute("userNo");
+		
+		if(userNo != null) {
+			UserDTO user = userService.getUserInfo(req, resp);
+			if(user != null) {
+				req.setAttribute("user", user);
+			}
+		} 
+		
 	}
 
 	

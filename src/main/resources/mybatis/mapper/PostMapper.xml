@@ -4,8 +4,8 @@
 
 <mapper namespace="com.postweb.mapper.PostMapper">
 	<insert id="registPost" parameterType="com.postweb.domain.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
-		insert into posts(post_title, post_content, post_hit) 
-		value (#{postTitle}, #{postContent}, 0)
+		insert into posts(post_writer_no, post_title, post_content, post_hit) 
+		value (#{postWriterNo}, #{postTitle}, #{postContent}, 0)
 	</insert>
 	
 	<select id="getAllPosts" resultType="com.postweb.domain.PostDTO">
@@ -13,14 +13,28 @@
 		order by post_reg_date DESC
 	</select>
 	
-	<select id="getPostDetail" parameterType="long" resultType="com.postweb.domain.PostDTO">
-		select * from posts
-		where post_no = #{postNo}
+	<select id="getPostDetail" parameterType="long" resultMap="PostWithUser">
+		select p.*, u.user_nick from posts p
+		join users u on u.user_no = p.post_writer_no
+		where p.post_no = #{postNo}
 	</select>
 	
+	<resultMap id="PostWithUser" type="com.postweb.domain.PostDTO">
+		<id property="postNo" column="post_no" />
+		<result property="postWriterNo" column="post_writer_no"/>
+		<result property="postTitle" column="post_title"/>
+		<result property="postContent" column="post_content"/>
+		<result property="postRegDate" column="post_reg_date"/>
+		<result property="postHit" column="post_hit"/>
+		<association property="userDTO" javaType="com.postweb.domain.UserDTO">
+	        <result property="userNo" column="user_no" />
+	        <result property="userNick" column="user_nick" />
+	    </association>	
+    </resultMap>
+
 	<delete id="deletePost" parameterType="long">
 		delete from posts
-		where post_no = #{postNo}
+		where post_no = #{postNo} and post_writer_no = #{userNo}
 	</delete>
 	
 	<update id="updatePost" parameterType="com.postweb.domain.PostDTO">
