@@ -42,7 +42,9 @@ public class SessionCheckFilter implements Filter {
             HttpSession session = httpRequest.getSession();
             Long userNo = (Long)session.getAttribute("userNo");
 
-            if (userNo == null && !path.equals("/user/userLogin.user") && !path.equals("/user/userSignUp.user") && !path.equals("/post/postList.post")) {
+            if (userNo == null && !path.equals("/user/userLogin.user") 
+            		&& !path.equals("/user/userSignUp.user") 
+            		&& !path.equals("/post/postList.post")) {
                 System.out.println("로그인 정보 없음");
             }
 

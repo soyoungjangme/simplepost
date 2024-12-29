@@ -16,8 +16,14 @@ body {
     font-weight: 600;
 }
 
+.regist-container > form {
+	display: flex;
+	justify-content: center;
+}
+
 .regist-post-box {
-    padding: 50px;
+    width: 60%;
+    margin-top: 20px;
 }
 
 .post-title {
@@ -52,4 +58,22 @@ body {
 
 .btn-box {
     text-align: right;
+}
+
+.btn-box > a {
+    text-decoration: none;
+    border-radius: 3px;
+    background-color: #474747;
+    padding: 2px 10px;
+    color: white;
+    font-size: small;
+}
+
+.btn-box > button {
+    all: unset;
+    color: rgb(255, 136, 0);
+    border: 1px solid rgb(255, 136, 0);
+    border-radius: 3px;
+    padding: 1.5px 10px;
+    font-size: small;
 }
