@@ -12,4 +12,5 @@ public class UrlPaths {
     public static final String USER_SIGNUP_FORM = "/user/userSignUpForm.user";
     public static final String USER_LOGIN = "/user/userLogin.user";
     public static final String USER_LOGIN_FORM = "/user/userLoginForm.user";
+    public static final String DUPLICATED_ID_CHECK = "/user/duplicatedIdCheckForm.user";
 }

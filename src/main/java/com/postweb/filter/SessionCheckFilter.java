@@ -31,7 +31,7 @@ public class SessionCheckFilter implements Filter {
         String path = uri.substring(contextPath.length());
 
         // 로그인 페이지로 이동할 때 세션 초기화
-        if (path.equals("/user/userLogin.user")) {
+        if (path.equals("/user/userLogin.user") || path.equals("/user/userSignUp.user")) {
             HttpSession session = httpRequest.getSession(false); // 세션이 있을 때만 가져옴
             if (session != null) {
                 session.invalidate(); // 세션 초기화
@@ -41,12 +41,6 @@ public class SessionCheckFilter implements Filter {
             // 일반 요청에서 세션 확인
             HttpSession session = httpRequest.getSession();
             Long userNo = (Long)session.getAttribute("userNo");
-
-            if (userNo == null && !path.equals("/user/userLogin.user") 
-            		&& !path.equals("/user/userSignUp.user") 
-            		&& !path.equals("/post/postList.post")) {
-                System.out.println("로그인 정보 없음");
-            }
 
             System.out.println("현재 로그인된 유저 No: " + userNo);
         }

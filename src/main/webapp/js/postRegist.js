@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	
 	
-	// 수정 form
+	// 완료버튼
 	const form = document.querySelector('form');
 	form.addEventListener('submit', (e) => {
 		e.preventDefault();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			postContent : content
 		}
 		
-		if(postNo){
+		if(postNo){ //수정 form
 			fetch(`postUpdate.post?postNo=${postNo}`, {
 				method: 'PUT',
 				body: JSON.stringify(postDTO)
