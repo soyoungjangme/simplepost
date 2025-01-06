@@ -46,4 +46,27 @@
 	        post_content = #{postContent}
 	    where post_no = #{postNo}
 	</update>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="long">
+		update posts 
+		set post_hit = post_hit + 1
+		where post_no = #{postNo}
+	</update>
+	
+	<!-- 오늘 조회 유무 확인 -->
+	<select id="checkHit" resultType="int">
+		select count(*)
+		from post_hit_history
+		where user_no = #{userNo} 
+			and post_no = #{postNo}
+			and date(hit_date) = current_date		
+	</select>
+	
+	<!-- 조회 기록 삽입 -->
+	<insert id="insertHit" parameterType="long">
+		insert into post_hit_history(user_no, post_no)
+		values (#{userNo}, #{postNo})
+	</insert>
+	
 </mapper>

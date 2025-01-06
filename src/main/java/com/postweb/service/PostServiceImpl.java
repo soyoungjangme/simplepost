@@ -167,7 +167,33 @@ public class PostServiceImpl implements PostService{
 		}
 	}
 
-	
-
+	//조회수 
+	@Override
+	public void updateHit(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+	    String postNoParam = request.getParameter("postNo");
+	    Long userNo = (Long)request.getSession().getAttribute("userNo"); 
+	    
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+			Long postNo = Long.parseLong(postNoParam);
+			
+			int checkHit = mapper.checkHit(postNo, userNo); //오늘 조회 유무
+			
+			if(checkHit < 1) { //조회 카운트 없을 때
+				mapper.updateHit(postNo); //조회수 +1
+				mapper.insertHit(postNo, userNo); //조회 이력 추가
+			}
+			
+			sql.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("조회 관련 서버 error");
+			if(!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+			}
+		}		
+	}
 
 }

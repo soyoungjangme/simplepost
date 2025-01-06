@@ -7,18 +7,25 @@
             <p>simplepost</p>
         </div>
         <div class="post-top">
-            <div class="user-status">
-	            <c:if test="${not empty sessionScope.userNo}">
-	                <div>${user.userName}</div>
+
+            <c:if test="${not empty sessionScope.userNo}">
+            	<div class="user-status">
+            		<div>${user.userName}</div>
 	                <a href="">내 정보</a>
-                </c:if>
-                <c:if test="${empty sessionScope.userNo}">
-                	<a href="../user/userSignUp.user">회원가입</a>
-                </c:if>
-            </div>
-            <div class="logout">
-                <a href="../user/userLogin.user">로그아웃</a>
-            </div>
+            	</div>
+            	<div class="logout">
+        			<a href="../user/userLogin.user">로그아웃</a>
+            	</div>
+            </c:if>
+            <c:if test="${empty sessionScope.userNo}">
+            	<div class="user-status">
+            		<a href="../user/userSignUp.user">회원가입</a>
+            	</div>
+            	<div class="logout">
+        			<a href="../user/userLogin.user">로그인</a>
+            	</div>
+            </c:if>
+            
         </div>
     </div>
 </div>

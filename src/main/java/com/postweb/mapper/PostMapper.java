@@ -12,4 +12,7 @@ public interface PostMapper {
 	public PostDTO getPostDetail(Long postNo);
 	public int deletePost(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
 	public void updatePost(PostDTO postDTO);
+	public void updateHit(Long postNo);
+	public void insertHit(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
+	public int checkHit(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
 }

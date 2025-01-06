@@ -51,6 +51,7 @@ public class PostController extends HttpServlet {
 	            
 			case UrlPaths.POST_DETAIL:
 				getPostDetail(req, resp);
+				postService.updateHit(req, resp);
 				break;
 				
 			case UrlPaths.POST_REGIST:
@@ -114,6 +115,10 @@ public class PostController extends HttpServlet {
 				postService.updatePost(req, resp);
 				break;
 			
+			case UrlPaths.POST_DETAIL: //조회수 증가 
+				postService.updateHit(req, resp); 
+				break;
+
 			default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
 		}
@@ -123,7 +128,7 @@ public class PostController extends HttpServlet {
 	public void getPostList( HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 서비스 계층에서 데이터 가져오기
         List<PostDTO> postList = postService.getAllPosts(req, resp);
-        
+
         if (postList != null) {
         	 // postRegDate를 포맷팅해서 담은 객체 생성
             List<String> formattedDates = new ArrayList<>();

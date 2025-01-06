@@ -15,3 +15,12 @@ create table users (
     user_nick varchar(100),
     user_reg_date date
 );
+
+CREATE TABLE post_hit_history (
+    history_no bigint PRIMARY KEY AUTO_INCREMENT,
+    user_no bigint NOT NULL,
+    post_no bigint NOT NULL,
+    hit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_no) REFERENCES posts(post_no),
+    foreign key (user_no) references users(user_no)
+);

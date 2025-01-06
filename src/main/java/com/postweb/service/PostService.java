@@ -15,4 +15,5 @@ public interface PostService {
 	public PostDTO getPostDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public int deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public void updatePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	public void updateHit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

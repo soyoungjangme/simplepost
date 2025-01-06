@@ -28,6 +28,7 @@
                             <th>제목</th>
                             <th>등록일</th>
                             <th>작성자</th>
+                            <th>조회수</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,7 @@
                                 <td><a href="./postDetail.post?postNo=${post.postNo}">${post.postTitle}</a></td>
                                 <td>${formattedDates[status.index]}</td>
                                 <td>${post.userDTO.userNick}</td>
+                                <td>${post.postHit}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
