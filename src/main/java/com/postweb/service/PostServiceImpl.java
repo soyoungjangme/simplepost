@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.postweb.domain.PostCommentDTO;
 import com.postweb.domain.PostDTO;
 import com.postweb.mapper.PostMapper;
 
@@ -194,6 +195,34 @@ public class PostServiceImpl implements PostService{
 				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
 			}
 		}		
+	}
+
+	@Override
+	public void registComment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+	    PostCommentDTO dto = objectMapper.readValue(request.getInputStream(), PostCommentDTO.class);
+
+		Long userNo = (Long)request.getSession().getAttribute("userNo");
+		dto.setUserNo(userNo);
+		
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			
+			System.out.println("작성된 댓글 " + dto.toString());
+			
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+			
+			mapper.registComment(dto);
+			
+			sql.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("댓글작성 중 서버 error");
+			if(!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+			}
+		}
 	}
 
 }

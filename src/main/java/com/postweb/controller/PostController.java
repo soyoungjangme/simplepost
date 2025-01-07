@@ -72,6 +72,10 @@ public class PostController extends HttpServlet {
 	            postService.registPost(req, resp);
 	            break;
 	            
+			case UrlPaths.POST_COMMENT_FORM:
+	            postService.registComment(req, resp);
+				break;
+				
             default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
 		}

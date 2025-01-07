@@ -1,6 +1,5 @@
 package com.postweb.domain;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class PostDTO {

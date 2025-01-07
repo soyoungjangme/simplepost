@@ -69,4 +69,12 @@
 		values (#{userNo}, #{postNo})
 	</insert>
 	
+	<!-- 댓글 작성 -->
+	<insert id="registComment" parameterType="com.postweb.domain.PostCommentDTO">
+		insert into post_comments(user_no, post_no, comment_text)
+		values (#{userNo}, #{postNo}, #{commentText})
+	</insert>
+	
+	
+	
 </mapper>

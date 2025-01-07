@@ -7,11 +7,16 @@ p {margin: 0;}
 }
 
 .top-title {
-    font-size: xx-large;
-    font-weight: 600;
-    padding: 30px;
+	padding: 30px;
     text-align: center;
+}
+
+.top-title a{
+	text-decoration: none;
+    font-size: xx-large;
+    font-weight: 600;    
     color: rgb(255, 136, 0);
+    cursor: pointer;
 }
 
 .post-top {

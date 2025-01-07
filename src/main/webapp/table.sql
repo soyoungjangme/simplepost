@@ -24,3 +24,13 @@ CREATE TABLE post_hit_history (
     FOREIGN KEY (post_no) REFERENCES posts(post_no),
     foreign key (user_no) references users(user_no)
 );
+
+create table post_comments (
+	comment_no bigint primary key auto_increment,
+    user_no bigint not null,
+    post_no bigint not null,
+    comment_text text,
+    comment_date timestamp default current_timestamp,
+    foreign key (user_no) references users(user_no),
+    foreign key (post_no) references posts(post_no)
+);

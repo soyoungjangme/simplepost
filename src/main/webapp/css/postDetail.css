@@ -116,3 +116,92 @@ p {
     color: white;
     font-size: small;
 }
+
+
+/* 댓글 */
+
+.post-comment-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.post-comment-box {
+    width: 60%;
+}
+
+.post-comment-box > p {
+    padding: 10px 0;
+}
+
+.post-comment-write {
+    display: flex;
+    border-top: 1px solid #666;
+    padding: 10px 5px;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.post-comment-write > textarea {
+    border-radius: 3px;
+    padding: 5px;
+    width: 90%;
+    height: 50px;
+    resize: none;
+    overflow-y: auto;
+}
+
+.post-comment-write > button {
+    all: unset;
+    border-radius: 3px;
+    font-size: small;
+    padding: 5px;
+    cursor: pointer;
+    color: #333;
+}
+
+.post-comment-write > button:hover {
+    background-color: #ddd;
+}
+
+.post-comment-list {
+    width: 100%;
+}
+
+.comment-list {
+    margin-bottom: 20px;
+    padding: 20px 10px 10px;
+}
+
+.comment-writer {
+    display: flex;
+    gap: 20px;
+    font-size: small;
+    align-items: baseline;
+}
+
+.comment-writer > p:nth-child(1) {
+    font-weight: 600;
+    font-size: medium;
+    color: rgb(255, 136, 0);
+}
+
+.comment-writer > p:nth-child(2) {
+    color: #999;
+}
+
+.comment {
+    /* border: 1px solid red; */
+    margin: 10px 0;
+    padding: 5px 0;
+    font-size: small;
+    color: #333;
+}
+
+.comment-list > button {
+    all: unset;
+    font-size: small;
+    color: #999;
+    cursor: pointer;
+}

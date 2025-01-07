@@ -4,7 +4,7 @@
 <div class="header-container">
     <div class="header-box">
         <div class="top-title">
-            <p>simplepost</p>
+            <p><a href="../post/postList.post">simplepost</a></p>
         </div>
         <div class="post-top">
 

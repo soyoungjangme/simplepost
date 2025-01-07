@@ -7,6 +7,7 @@ public class UrlPaths {
     public static final String POST_DETAIL = "/post/postDetail.post";
     public static final String POST_DELETE = "/post/postDelete.post";
     public static final String POST_UPDATE = "/post/postUpdate.post";
+    public static final String POST_COMMENT_FORM = "/post/postCommentForm.post";
     
     public static final String USER_SIGNUP = "/user/userSignUp.user";
     public static final String USER_SIGNUP_FORM = "/user/userSignUpForm.user";

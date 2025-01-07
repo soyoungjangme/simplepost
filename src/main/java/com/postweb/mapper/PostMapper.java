@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.postweb.domain.PostCommentDTO;
 import com.postweb.domain.PostDTO;
 
 public interface PostMapper {
@@ -15,4 +16,5 @@ public interface PostMapper {
 	public void updateHit(Long postNo);
 	public void insertHit(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
 	public int checkHit(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
+	public void registComment(PostCommentDTO postCommentDTO);
 }
