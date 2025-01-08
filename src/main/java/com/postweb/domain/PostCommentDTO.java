@@ -10,15 +10,19 @@ public class PostCommentDTO {
 	private String commentText; //댓글내용
 	private LocalDateTime commentDate; //댓글작성일시
 	
+	private UserDTO userDTO;
+	
 	public PostCommentDTO() {}
 
-	public PostCommentDTO(Long commentNo, Long userNo, Long postNo, String commentText, LocalDateTime commentDate) {
+	public PostCommentDTO(Long commentNo, Long userNo, Long postNo, String commentText, LocalDateTime commentDate,
+			UserDTO userDTO) {
 		super();
 		this.commentNo = commentNo;
 		this.userNo = userNo;
 		this.postNo = postNo;
 		this.commentText = commentText;
 		this.commentDate = commentDate;
+		this.userDTO = userDTO;
 	}
 
 	public Long getCommentNo() {
@@ -61,11 +65,20 @@ public class PostCommentDTO {
 		this.commentDate = commentDate;
 	}
 
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "PostCommentDTO [commentNo=" + commentNo + ", userNo=" + userNo + ", postNo=" + postNo + ", commentText="
-				+ commentText + ", commentDate=" + commentDate + "]";
+				+ commentText + ", commentDate=" + commentDate + ", userDTO=" + userDTO + "]";
 	}
+
 	
 	
 	

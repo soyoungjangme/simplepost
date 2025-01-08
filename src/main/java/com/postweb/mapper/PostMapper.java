@@ -1,5 +1,6 @@
 package com.postweb.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,6 @@ public interface PostMapper {
 	public void insertHit(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
 	public int checkHit(@Param("postNo") Long postNo, @Param("userNo") Long UserNo);
 	public void registComment(PostCommentDTO postCommentDTO);
+	public ArrayList<PostCommentDTO> getPostComment(Long PostNo);
+	public void deletePostComment(Long commentNo);
 }

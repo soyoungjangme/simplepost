@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.postweb.constants.UrlPaths;
+import com.postweb.domain.PostCommentDTO;
 import com.postweb.domain.PostDTO;
 import com.postweb.domain.UserDTO;
 import com.postweb.service.PostService;
@@ -50,8 +51,8 @@ public class PostController extends HttpServlet {
 	            break;
 	            
 			case UrlPaths.POST_DETAIL:
-				getPostDetail(req, resp);
-				postService.updateHit(req, resp);
+				getPostData(req, resp); //게시물 내용
+				postService.updateHit(req, resp); //조회수 증가
 				break;
 				
 			case UrlPaths.POST_REGIST:
@@ -98,6 +99,10 @@ public class PostController extends HttpServlet {
 	                    out.write("{\"success\": false, \"message\": \"삭제 실패\"}");
 	                }
 	                break;
+	                
+	            case UrlPaths.POST_COMMENT_DELETE:
+	            	postService.deletePostComment(req, resp);
+	            	break;
 	            default:
 	                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "{\"success\": false, \"message\": \"Page not found\"}");
 	        }
@@ -160,23 +165,19 @@ public class PostController extends HttpServlet {
 	}
 	
 	//게시글 상세 보기
-	public void getPostDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		try {
+	public void getPostData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	    try {
+	    	// 게시물 상세 정보
 	        PostDTO postDetail = postService.getPostDetail(req, resp);
-
 	        if (postDetail == null) {
-	            if (!resp.isCommitted()) {
-	                resp.sendRedirect(req.getContextPath() + "/errorPage.jsp");
-	            }
+	            resp.sendRedirect(req.getContextPath() + "/errorPage.jsp");
 	            return;
 	        }
-
+	        
 	        // JSON 응답이 이미 처리된 경우 메서드 종료
 	        if (req.getHeader("Accept") != null && req.getHeader("Accept").contains("application/json")) {
 	            return;
 	        }
-
 	        // HTML 응답 처리
 	        LocalDateTime postRegDate = postDetail.getPostRegDate();
 	        if (postRegDate != null) {
@@ -184,15 +185,33 @@ public class PostController extends HttpServlet {
 	            String formattedDate = postRegDate.format(formatter);
 	            req.setAttribute("formattedDate", formattedDate);
 	        }
+	        req.setAttribute("postDetail", postDetail);
 
+	        
+	        // 댓글 정보
+	        ArrayList<PostCommentDTO> commentList = postService.getPostComment(req, resp);
+	        if (commentList != null) {
+	            List<String> formattedDates = new ArrayList<>();
+	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	            for (PostCommentDTO comment : commentList) {
+	                LocalDateTime commentDate = comment.getCommentDate();
+	                formattedDates.add(commentDate != null ? commentDate.format(formatter) : null);
+	            }
+	            req.setAttribute("commentFormattedDates", formattedDates);
+	            req.setAttribute("commentList", commentList);
+	        }
+
+	        // 한 번만 forward
 	        req.getRequestDispatcher("postDetail.jsp").forward(req, resp);
-	    } catch (Exception e) {
+
+    	} catch (Exception e) {
 	        e.printStackTrace();
 	        if (!resp.isCommitted()) {
-                resp.sendRedirect(req.getContextPath()  + "/errorPage.jsp");
+	            resp.sendRedirect(req.getContextPath() + "/errorPage.jsp");
 	        }
 	    }
 	}
+
 	
 	public void getUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// session가져오기
@@ -206,7 +225,6 @@ public class PostController extends HttpServlet {
 		} 
 		
 	}
-
 	
 	
 }

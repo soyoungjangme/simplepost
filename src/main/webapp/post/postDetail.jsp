@@ -56,44 +56,27 @@
             
             <div class="post-comment-container">
                 <div class="post-comment-box">
-                    <p>댓글쓰기</p>
-                    <!-- <form action="postCommentForm.post" method="post">
-                        <div class="post-comment-write">
-                            <textarea name="comment_text" placeholder="댓글을 입력해주세요." required></textarea>
-                            <button type="submit" class="regist-form">등록</button>
-                        </div>
-                    </form>  -->
-                    
+                    <p>댓글쓰기</p>                    
                     <div class="post-comment-write">
                         <textarea name="comment_text" placeholder="댓글을 입력해주세요." required></textarea>
                         <button type="button" class="regist-form">등록</button>
                     </div>
                     
                      
-                    <div class="post-comment-list">
-                        <div class="comment-list">
-                            <div class="comment-writer">
-                                <p>닉네임</p>
-                                <p>2025-01-07</p>
-                            </div>
-                            <div class="comment">댓글댓글댓글댓글댓글댓글
-                                댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글
-                                댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글
-                                댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글
-                                댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글
-                                댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글
-                                댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글댓글
-                            </div>
-                            <button type="button">삭제</button>
-                        </div>
-                        <div class="comment-list">
-                            <div class="comment-writer">
-                                <p>닉네임2</p>
-                                <p>2025-01-15</p>
-                            </div>
-                            <div class="comment">댓글댓글댓글2</div>
-                            <button type="button">삭제</button>
-                        </div>
+                    <div class="post-comment-list">                    
+	                    <c:forEach var="comment" items="${commentList}" varStatus="status">
+	                    	<div class="comment-list">
+	                            <div class="comment-writer">
+	                                <p>${comment.userDTO.userNick}</p>
+	                                <p>${commentFormattedDates[status.index]}</p>
+	                            </div>
+	                            <div class="comment">${comment.commentText}</div>
+	                            <c:if test="${sessionScope.userNo == comment.userDTO.userNo}">
+	                            	<button type="button" class="delete-comment-btn" 
+			                         comment-no="${comment.commentNo}" user-no="${comment.userDTO.userNo}">삭제</button>
+	                            </c:if>
+	                        </div>
+	                    </c:forEach>
                     </div>
                 </div>
             </div>

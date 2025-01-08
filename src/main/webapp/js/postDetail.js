@@ -46,9 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(`postCommentForm.post?postNo=${postNo}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // 이 헤더가 필요합니다
-            },
             body: JSON.stringify(postCommentDTO)
         })
         .then(response => {
@@ -63,5 +60,39 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('댓글 등록 중 문제가 발생했습니다. 다시 시도해주세요.');
         });
     });
+	
+	// 댓글 삭제
+	const deleteCommentBtn = document.querySelectorAll('.delete-comment-btn');
+	
+	deleteCommentBtn.forEach((button) => {
+		button.addEventListener('click', () => {
+			const commentNo = button.getAttribute("comment-no");
+			const userNo = button.getAttribute("user-no");
+
+            if (confirm("댓글을 삭제하시겠습니까?")) {
+                // AJAX 요청을 통해 서버에 commentNo 전달
+                fetch('postCommentDelete.post', {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ commentNo, userNo }),
+                })
+				.then(response => {
+		            if (response.ok) {
+		                window.location.href = `postDetail.post?postNo=${postNo}`;
+		            } else {
+		                throw new Error('댓글 삭제 실패');
+		            }
+		        })
+                .catch((error) => {
+                    console.error("Error: ", error);
+                    alert("서버 오류가 발생했습니다.");
+                });
+            }
+		});
+	});
+	
+	
 });
 

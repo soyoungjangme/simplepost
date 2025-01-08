@@ -9,13 +9,15 @@
 	</insert>
 	
 	<select id="getAllPosts" resultMap="PostWithUser">
-		select p.*, u.user_nick from posts p
+		select p.*, u.user_nick 
+		from posts p
 		join users u on u.user_no = p.post_writer_no
 		order by post_reg_date DESC
 	</select>
 	
 	<select id="getPostDetail" parameterType="long" resultMap="PostWithUser">
-		select p.*, u.user_nick from posts p
+		select p.*, u.user_nick 
+		from posts p
 		join users u on u.user_no = p.post_writer_no
 		where p.post_no = #{postNo}
 	</select>
@@ -75,6 +77,27 @@
 		values (#{userNo}, #{postNo}, #{commentText})
 	</insert>
 	
+	<!-- 댓글 목록 -->
+	<select id="getPostComment" parameterType="long" resultMap="postCommentMap">
+		select c.*, u.*
+		from post_comments c
+		join users u on u.user_no = c.user_no
+		where c.post_no = #{postNo}
+	</select>
 	
+	<resultMap type="com.postweb.domain.PostCommentDTO" id="postCommentMap">
+		<id property="commentNo" column="comment_no" />
+		<result property="userNo" column="user_no"/>
+		<result property="postNo" column="post_no" />
+		<result property="commentText" column="comment_text" />
+		<result property="commentDate" column="comment_date" />
+	    <association property="userDTO" resultMap="UserResultMap" />
+	</resultMap>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deletePostComment" parameterType="long">
+		delete from post_comments
+		where comment_no = #{commentNo}
+	</delete>
 	
 </mapper>

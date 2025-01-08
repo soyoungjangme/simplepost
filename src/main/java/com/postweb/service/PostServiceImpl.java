@@ -1,6 +1,7 @@
 package com.postweb.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.postweb.domain.PostCommentDTO;
 import com.postweb.domain.PostDTO;
@@ -71,8 +73,9 @@ public class PostServiceImpl implements PostService{
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("전체 게시글 불러오는 중 error");
-			response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
-			
+			if(!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+			}
 	        return null;  
 		}
 	}
@@ -110,7 +113,7 @@ public class PostServiceImpl implements PostService{
 	        }
 
 	        // HTML 응답 처리 (JSP로 데이터 전달)
-	        request.setAttribute("postDetail", post);
+	        //request.setAttribute("postDetail", post);
 	        return post;
 	        
 	    } catch (Exception e) {
@@ -219,6 +222,63 @@ public class PostServiceImpl implements PostService{
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("댓글작성 중 서버 error");
+			if(!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+			}
+		}
+	}
+
+	// 댓글 가져오기
+	@Override
+	public ArrayList<PostCommentDTO> getPostComment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String postNoParam = request.getParameter("postNo");
+		Long postNo = Long.parseLong(postNoParam);
+		
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+			ArrayList<PostCommentDTO> getComment = mapper.getPostComment(postNo);
+			
+			return getComment;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("댓글 호출 중 서버 error");
+			if(!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+			}
+			return null;
+		}
+	}
+
+	@Override
+	public void deletePostComment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		 // JSON 데이터 파싱
+		Map<String, Long> requestData = objectMapper.readValue(request.getInputStream(), new TypeReference<Map<String, Long>>() {});
+        Long commentNo = requestData.get("commentNo");
+        Long commentUserNo = requestData.get("userNo"); //댓글 작성자
+        
+        Long userNo = (Long)request.getSession().getAttribute("userNo"); // 현재 session 유저
+
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+			
+			if(userNo == commentUserNo) {
+				mapper.deletePostComment(commentNo);	
+				sql.commit();
+			}else {
+				System.out.println("댓글 삭제 권한 없는 유저");
+				if(!response.isCommitted()) {
+					response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+				}
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("댓글삭제 중 서버 error");
 			if(!response.isCommitted()) {
 				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
 			}
