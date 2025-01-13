@@ -9,6 +9,7 @@ import com.postweb.constants.UrlPaths;
 import com.postweb.domain.UserDTO;
 import com.postweb.mapper.UserMapper;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,9 +29,11 @@ public class UserServiceImpl implements UserService {
 		String userId = request.getParameter("user_id");
 		String userPw = request.getParameter("user_pw");
 		
+		String hashedPassword = BCrypt.withDefaults().hashToString(12, userPw.toCharArray());
+		
 		UserDTO dto = new UserDTO();
 		dto.setUserId(userId);
-		dto.setUserPw(userPw);
+		dto.setUserPw(hashedPassword);
 		dto.setUserName(userName);
 		dto.setUserNick(userNick);
 		
@@ -57,18 +60,18 @@ public class UserServiceImpl implements UserService {
 		String userId = request.getParameter("user_id");
 		String userPw = request.getParameter("user_pw");
 		
-		UserDTO dto = new UserDTO();
-		dto.setUserId(userId);
-		dto.setUserPw(userPw);
+//		UserDTO dto = new UserDTO();
+//		dto.setUserId(userId);
+		//dto.setUserPw(userPw);
 		
 		try(SqlSession sql = sqlSessionFactory.openSession()){
 			UserMapper mapper = sql.getMapper(UserMapper.class);
-			Long userNo = mapper.checkLogin(dto);
+			UserDTO userDTO = mapper.checkLogin(userId);
 			
-			if(userNo != null && userNo != 0) {
+	        if (userDTO != null && BCrypt.verifyer().verify(userPw.toCharArray(), userDTO.getUserPw()).verified) {
 				//session에 userNo저장
 				HttpSession session = request.getSession();
-				session.setAttribute("userNo", userNo);
+				session.setAttribute("userNo", userDTO.getUserNo());
 				
 				response.sendRedirect(request.getContextPath() + "/post/postList.post");
 			} else {

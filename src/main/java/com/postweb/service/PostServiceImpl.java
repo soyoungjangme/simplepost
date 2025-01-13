@@ -113,7 +113,6 @@ public class PostServiceImpl implements PostService{
 	        }
 
 	        // HTML 응답 처리 (JSP로 데이터 전달)
-	        //request.setAttribute("postDetail", post);
 	        return post;
 	        
 	    } catch (Exception e) {

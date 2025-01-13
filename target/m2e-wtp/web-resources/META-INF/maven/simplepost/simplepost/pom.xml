@@ -9,19 +9,19 @@
   <packaging>war</packaging>
 
   <dependencies>
-      	<!-- Jakarta JSTL 3.0 의존성 (Jakarta Servlet 기반으로 전환하는 경우) -->
-  		<dependency>
-			<groupId>jakarta.servlet.jsp.jstl</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		
-	    <!-- Jakarta JSTL 3.0 구현체 -->
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
-			<version>3.0.1</version>
-		</dependency>
+  	<!-- Jakarta JSTL 3.0 의존성 (Jakarta Servlet 기반으로 전환하는 경우) -->
+	<dependency>
+		<groupId>jakarta.servlet.jsp.jstl</groupId>
+		<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+		<version>3.0.0</version>
+	</dependency>
+	
+    <!-- Jakarta JSTL 3.0 구현체 -->
+	<dependency>
+		<groupId>org.glassfish.web</groupId>
+		<artifactId>jakarta.servlet.jsp.jstl</artifactId>
+		<version>3.0.1</version>
+	</dependency>
 		
 
     <!-- MyBatis 의존성 -->
@@ -43,6 +43,13 @@
 	    <groupId>com.fasterxml.jackson.core</groupId>
 	    <artifactId>jackson-databind</artifactId>
 	    <version>2.18.2</version>
+	</dependency>
+	
+	<!-- BCrypt PW 해싱 함수 -->
+	<dependency>
+	    <groupId>at.favre.lib</groupId>
+	    <artifactId>bcrypt</artifactId>
+	    <version>0.10.2</version>
 	</dependency>
 
   </dependencies>
