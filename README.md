@@ -8,7 +8,7 @@
 4. [ 댓글](#-댓글)
 5. [ 헤더](#-헤더)
 6. [ 가입, 로그인](#-가입-로그인)
-7. [ 패스워드 해싱](--#-패스워드-해싱)
+7. [ 패스워드 해싱](#--패스워드-해싱)
 8. [ 개발 기간](#-개발기간)
 
 ---
@@ -34,11 +34,11 @@
 ###### 작성자, 작성일시, 제목, 내용, 댓글
 <br>
 
-- #### 글작성자 = 유저
+#### - 글작성자 = 유저
 ###### 삭제/수정 버튼 ㅇ
 <img src="https://github.com/user-attachments/assets/a303978b-1be8-4c79-aaa4-c94d78190260" width="900">
 
-- #### 글작성자 not 유저
+#### - 글작성자 not 유저
 ###### 삭제/수정 버튼 x
 <img src="https://github.com/user-attachments/assets/6d9cdd7f-47c0-4acd-af2b-8bfd0124c17e" width="900">
 
@@ -60,7 +60,7 @@
 
 ---
 ### ⭐ 가입, 로그인
-- ##### 패스워드 해싱
+##### - 패스워드 해싱
 ![암호화_DB](https://github.com/user-attachments/assets/8fa3d684-dea4-4c37-98be-66fcfbc5c49a)
 
 ##### ✅ 해싱이 필요한 경우
@@ -75,14 +75,14 @@
 > 유저가 입력한 비밀번호와 해시값인 DB 비밀번호를 일치시켜야 하기 때문에 BCrypt.verifyer()를 통해 입력값을 해시값으로 변환시킨 후, DB값과 비교합니다.
 
 
-- ##### 아이디 중복확인
+##### - 아이디 중복확인
 
 | 글작성자=유저 | 글작성자!=유저 |
 |----------|----------|
 |중복확인 안하고 가입 시|ID중복확인|
 |<img src="https://github.com/user-attachments/assets/815f1e1c-19d3-4da4-aeb1-a52b52633af9" width="450">|<img src="https://github.com/user-attachments/assets/06fb7bd5-f110-4ec6-838e-abeaaeb9e7a9" width="450">|
 
-- ##### 로그인
+##### - 로그인
 ![로그인](https://github.com/user-attachments/assets/87ec69db-abd7-49f7-8b6b-af03dc4494be)
 
 
