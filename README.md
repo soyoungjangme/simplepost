@@ -62,9 +62,8 @@
 ### ⭐ 가입, 로그인
 ##### - 아이디 중복확인
 
-| 글작성자=유저 | 글작성자!=유저 |
+| 중복확인 안하고 가입 | ID중복확인 |
 |----------|----------|
-|중복확인 안하고 가입 시|ID중복확인|
 |<img src="https://github.com/user-attachments/assets/815f1e1c-19d3-4da4-aeb1-a52b52633af9" width="450">|<img src="https://github.com/user-attachments/assets/06fb7bd5-f110-4ec6-838e-abeaaeb9e7a9" width="450">|
 
 ##### - 로그인
