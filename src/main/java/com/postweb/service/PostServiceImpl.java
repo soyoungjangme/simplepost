@@ -284,4 +284,25 @@ public class PostServiceImpl implements PostService{
 		}
 	}
 
+	@Override
+	public Long getPostWriter(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String postNoParam = request.getParameter("postNo");
+		Long postNo = Long.parseLong(postNoParam);
+		
+		try(SqlSession sql = sqlSessionFactory.openSession()){
+			PostMapper mapper = sql.getMapper(PostMapper.class);
+			Long postWriterNo = mapper.getPostWriter(postNo);
+			
+			return postWriterNo;
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("작성자 정보 호출 중 서버 error");
+			if(!response.isCommitted()) {
+				response.sendRedirect(request.getContextPath() + "/errorPage.jsp");				
+			}
+			return null;
+		}
+	}
+
 }

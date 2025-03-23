@@ -21,4 +21,6 @@ public interface PostService {
 	public void registComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public ArrayList<PostCommentDTO> getPostComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	public void deletePostComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+
+	public Long getPostWriter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

@@ -100,4 +100,11 @@
 		where comment_no = #{commentNo}
 	</delete>
 	
+	<!-- 작성자 -->
+	<select id="getPostWriter" parameterType="long" resultType="long">
+		select post_writer_no
+		from posts
+		where post_no = #{postNo}
+	</select>
+	
 </mapper>

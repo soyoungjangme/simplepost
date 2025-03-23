@@ -20,4 +20,6 @@ public interface PostMapper {
 	public void registComment(PostCommentDTO postCommentDTO);
 	public ArrayList<PostCommentDTO> getPostComment(Long PostNo);
 	public void deletePostComment(Long commentNo);
+	
+	public Long getPostWriter(Long postNo); //작성자번호
 }

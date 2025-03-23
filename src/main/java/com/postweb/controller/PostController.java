@@ -56,7 +56,24 @@ public class PostController extends HttpServlet {
 				break;
 				
 			case UrlPaths.POST_REGIST:
-	            req.getRequestDispatcher("postRegist.jsp").forward(req, resp);
+				// 작성자정보
+				Long postWriterNo = postService.getPostWriter(req, resp);
+				// 로그인정보
+				Long userNo = (Long) req.getSession().getAttribute("userNo");
+
+				//동일하면 접근허용
+				if(postWriterNo.equals(userNo)) {
+		            req.getRequestDispatcher("postRegist.jsp").forward(req, resp);					
+				}else {
+					resp.setContentType("text/html; charset=UTF-8"); //한글깨짐방지
+					PrintWriter out = resp.getWriter();
+					out.println("<script>");
+					out.println("alert('접근 권한이 없습니다.');");
+					out.println("history.back();"); //이전페이지 이동
+					out.println("</script>");
+					out.close();
+				}
+	            
 	            break;
 	            
             default:
